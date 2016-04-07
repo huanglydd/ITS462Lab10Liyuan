@@ -16,7 +16,7 @@ namespace GetDronesAJAX
 
             public void Page_Load(object sender, EventArgs e)
         {
-            string subKey = Request.QueryString["q"];
+            string subKey = Request.QueryString["q"].ToLower();
             StringBuilder suggestions = new StringBuilder("");
 
             foreach (string key in options)

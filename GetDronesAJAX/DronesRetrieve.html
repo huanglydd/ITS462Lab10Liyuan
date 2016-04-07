@@ -102,6 +102,7 @@
 
         // Submit retrieve key to web app GetResult to get abstract information
         function submitKey() {
+            document.getElementById("extend").value = "";
             var temp = document.getElementById("key").value;
             getResult(resultURL + "?q=" + temp);
         }
@@ -160,7 +161,7 @@
         function selectResult(Result)
         {
             var globalKey = document.getElementById("key").value;
-            getExtend(extendURL + "?q=" + globalKey + "!" +Result )
+            getExtend(extendURL + "?q=" + globalKey + "!" +Result )     // (URL + "?q=" + globalkey +"&result=" + result )
         }
 
         function getExtend(url) {
@@ -218,21 +219,23 @@
 <body style="font-family:Georgia; text-align:center" onload="document.all.item('result').value = ''; document.all.item('extend').value = ''; document.all.item('key').value = '';">
     <h2>Retrieve Drones</h2>
     <form>
-        <table>
-            <tr>
-                <td valign="top">
+        <table style="border:solid">
+            <tr >
+                <td valign="top"  style="border:thin">
                     Input Key:
                     <input type="text" id="key" name="key" size="20" onkeyup="getOption(this.value)" />
                     <input type="button" id="submit_key" name="submit_key" value="Start" size="6" onclick="submitKey()" />
                     <br />
                     <div id="auto_suggestion" style=""></div>
                 </td>
-                <td valign="top">
+            </tr>
+            <tr>
+                <td valign="top" style="border:thin">
                     Result:
                     <br />
                     <div id="auto_listResult" style=""></div>
                 </td>
-                <td valign="top">
+                <td valign="top" style="border:thin">
                     Extend:
                     <br />
                     <textarea id="extend" cols="60" rows="20"></textarea>
