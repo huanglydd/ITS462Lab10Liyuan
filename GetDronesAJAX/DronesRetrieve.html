@@ -1,0 +1,244 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>DronesRetrieve</title>
+    <style type="text/css">
+        li {
+            list-style-type: none;
+        }
+        #auto_suggestion {
+            text-align: left;
+            background-color: #eeeeee;
+            width: 200px;
+            position: relative;
+            top: 0px;
+            left: 0px;
+            display: none;
+            height: auto;
+            overflow: auto;
+        }
+        #auto_listResult {
+            text-align: left;
+            background-color: greenyellow;
+            width: 200px;
+            position: relative;
+            top: 0px;
+            left: 0px;
+            display: none;
+            height: auto;
+            overflow: auto;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+        var targetURL = "GetOption.aspx"
+        var resultURL = "GetResult.aspx"
+        var extendURL = "GetExtend.aspx"
+
+        //the onkeyup event for input suggestion
+        function getOption(partial_Key) {
+            getSuggestion(targetURL + "?q=" + partial_Key);
+        }
+
+        // instantiate an XHR object and start the asynchronous call
+        function getSuggestion(url) {
+            var httpRequest;
+
+            if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+                httpRequest = new XMLHttpRequest();
+                if (httpRequest.overrideMimeType) {
+                    //httpRequest.overrideMimeType('text/xml');
+                }
+            }
+            else if (window.ActiveXObject) { // IE
+                try {
+                    httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                }
+                catch (e) {
+                    try {
+                        httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    catch (e) { }
+                }
+            }
+
+            if (!httpRequest) {
+                alert('Giving up :( Cannot create an XMLHTTP instance');
+                return false;
+            }
+
+            // The onreadystatechange event is triggered every time the readyState changes.
+            httpRequest.onreadystatechange = function () { displaySuggestion(httpRequest); };
+            //alert(url);
+            httpRequest.open('GET', url, true);
+            httpRequest.send('');
+        }
+
+        // the callback function for the asynchronous call
+        function displaySuggestion(httpRequest) {
+            var displayText = "";
+
+            if (httpRequest.readyState == 4) {     // request finished and response is ready
+                if (httpRequest.status == 200) {
+                    //alert(httpRequest.responseText);
+                    displayText = httpRequest.responseText;
+                } else {
+                    //alert('There was a problem with the request.');
+                    displayText = "There was a problem with the request.";
+                }
+
+                //document.all.item("result").value = displayText;
+                document.getElementById("auto_suggestion").innerHTML = displayText;
+                document.getElementById("auto_suggestion").style.display = "block";
+
+            }
+        }
+
+        // set the text box with the selected item
+        function selectItem(item) {
+            document.getElementById("key").value = item;
+            document.getElementById("auto_suggestion").innerHTML = "";
+            document.getElementById("auto_suggestion").style.display = "none";
+        }
+
+        // Submit retrieve key to web app GetResult to get abstract information
+        function submitKey() {
+            var temp = document.getElementById("key").value;
+            getResult(resultURL + "?q=" + temp);
+        }
+
+        function getResult(url) {
+            var httpRequest;
+
+            if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+                httpRequest = new XMLHttpRequest();
+                if (httpRequest.overrideMimeType) {
+                    //httpRequest.overrideMimeType('text/xml');
+                }
+            }
+            else if (window.ActiveXObject) { // IE
+                try {
+                    httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                }
+                catch (e) {
+                    try {
+                        httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    catch (e) { }
+                }
+            }
+
+            if (!httpRequest) {
+                alert('Giving up :( Cannot create an XMLHTTP instance');
+                return false;
+            }
+
+            // The onreadystatechange event is triggered every time the readyState changes.
+            httpRequest.onreadystatechange = function () { displayResult(httpRequest); };
+            //alert(url);
+            httpRequest.open('GET', url, true);
+            httpRequest.send('');
+        }
+
+        function displayResult(httpRequest) {
+            var displayText = "";
+
+            if (httpRequest.readyState == 4) {     // request finished and response is ready
+                if (httpRequest.status == 200) {
+                    //alert(httpRequest.responseText);
+                    displayText = httpRequest.responseText;
+                } else {
+                    //alert('There was a problem with the request.');
+                    displayText = "There was a problem with the request.";
+                }
+
+                document.getElementById("auto_listResult").innerHTML = displayText;
+                document.getElementById("auto_listResult").style.display = "block";
+
+            }
+        }
+
+        function selectResult(Result)
+        {
+            var globalKey = document.getElementById("key").value;
+            getExtend(extendURL + "?q=" + globalKey + "!" +Result )
+        }
+
+        function getExtend(url) {
+            var httpRequest;
+
+            if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+                httpRequest = new XMLHttpRequest();
+                if (httpRequest.overrideMimeType) {
+                    //httpRequest.overrideMimeType('text/xml');
+                }
+            }
+            else if (window.ActiveXObject) { // IE
+                try {
+                    httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                }
+                catch (e) {
+                    try {
+                        httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    catch (e) { }
+                }
+            }
+
+            if (!httpRequest) {
+                alert('Giving up :( Cannot create an XMLHTTP instance');
+                return false;
+            }
+
+            // The onreadystatechange event is triggered every time the readyState changes.
+            httpRequest.onreadystatechange = function () { displayExtend(httpRequest); };
+            //alert(url);
+            httpRequest.open('GET', url, true);
+            httpRequest.send('');
+        }
+
+        function displayExtend(httpRequest) {
+            var displayText = "";
+
+            if (httpRequest.readyState == 4) {     // request finished and response is ready
+                if (httpRequest.status == 200) {
+                    //alert(httpRequest.responseText);
+                    displayText = httpRequest.responseText;
+                } else {
+                    //alert('There was a problem with the request.');
+                    displayText = "There was a problem with the request.";
+                }
+
+                document.all.item("extend").value = displayText;
+
+            }
+        }
+    </script>
+
+</head>
+<body style="font-family:Georgia; text-align:center" onload="document.all.item('result').value = ''; document.all.item('extend').value = ''; document.all.item('key').value = '';">
+    <h2>Retrieve Drones</h2>
+    <form>
+        <table>
+            <tr>
+                <td valign="top">
+                    Input Key:
+                    <input type="text" id="key" name="key" size="20" onkeyup="getOption(this.value)" />
+                    <input type="button" id="submit_key" name="submit_key" value="Start" size="6" onclick="submitKey()" />
+                    <br />
+                    <div id="auto_suggestion" style=""></div>
+                </td>
+                <td valign="top">
+                    Result:
+                    <br />
+                    <div id="auto_listResult" style=""></div>
+                </td>
+                <td valign="top">
+                    Extend:
+                    <br />
+                    <textarea id="extend" cols="60" rows="20"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
