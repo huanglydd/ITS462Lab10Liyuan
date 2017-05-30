@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>后台登陆</title>
+<link href="css/login.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="js/login.js"></script>
+</head>
+<body>
+	<div class="login">
+	    <div class="message">大数据的事件智能抓取和画像后台登陆</div>
+	    <div id="darkbannerwrap"></div>
+	    <form name="login" action="php/login.php" method="post" onsubmit="return check()">
+			<input name="name" id="name" placeholder="请输入登录帐号" type="text" required="required" maxlength="16">
+				<hr class="hr15">
+			<input name="password" id="password" placeholder="请输入登录密码" type="password" required="required" maxlength="16">
+				<hr class="hr15">
+			<input value="登录" style="width:100%;" type="submit" name="submit">
+			<a href="result.html">注册</a>
+			<a href="#">忘记密码</a>
+				<hr class="hr20">
+		</form>
+	</div>
+</body>
+</html>
